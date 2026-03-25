@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InfraGuard AI — Documentation</title>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface2: #1c2333;
+      --border: #2a3548;
+      --primary: #3b82f6;
+      --accent: #06b6d4;
+      --green: #10b981;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --purple: #8b5cf6;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --text-muted: #4b5563;
+      --code-bg: #0d1117;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #0a0e1a, #111827);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .logo-text { font-size: 1.4rem; font-weight: 700; }
+    .logo-text span { color: var(--primary); }
+    .download-btn {
+      background: linear-gradient(135deg, var(--primary), #1d4ed8);
+      border: none; border-radius: 8px;
+      padding: 10px 20px; color: white;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .download-btn:hover { opacity: 0.9; }
+
+    /* ── LAYOUT ── */
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2rem;
+    }
+
+    /* ── SIDEBAR NAV ── */
+    .nav {
+      position: sticky;
+      top: 2rem;
+      height: fit-content;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .nav h4 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .nav a {
+      display: block;
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      transition: all 0.2s;
+      margin-bottom: 2px;
+    }
+    .nav a:hover { background: var(--surface2); color: var(--text); }
+    .nav a.active { background: rgba(59,130,246,0.15); color: var(--primary); }
+    .nav-section { margin-top: 1rem; }
+
+    /* ── CONTENT ── */
+    .content { min-width: 0; }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+    h2 {
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--accent); margin: 1.2rem 0 0.5rem; }
+    p { color: var(--text-dim); margin-bottom: 0.75rem; font-size: 0.9rem; }
+    ul, ol { color: var(--text-dim); padding-left: 1.5rem; font-size: 0.9rem; }
+    li { margin-bottom: 0.4rem; }
+    strong { color: var(--text); }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #a8d3f5;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: 0.82rem;
+      color: #a8d3f5;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .card-title { font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .card-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ── TABLE ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin: 1rem 0;
+    }
+    th {
+      background: var(--surface2);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid rgba(42,53,72,0.5);
+      color: var(--text-dim);
+    }
+    td:first-child { color: var(--text); font-weight: 500; }
+
+    /* ── BADGES ── */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-red    { background: rgba(239,68,68,0.2);   color: var(--red);    border: 1px solid rgba(239,68,68,0.3); }
+    .badge-yellow { background: rgba(245,158,11,0.2);  color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+    .badge-green  { background: rgba(16,185,129,0.2);  color: var(--green);  border: 1px solid rgba(16,185,129,0.3); }
+    .badge-blue   { background: rgba(59,130,246,0.2);  color: var(--primary);border: 1px solid rgba(59,130,246,0.3); }
+    .badge-purple { background: rgba(139,92,246,0.2);  color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
+
+    /* ── FLOW ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .flow-step {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-align: center;
+    }
+    .flow-arrow { color: var(--primary); font-size: 1.2rem; }
+
+    /* ── ALERT ── */
+    .alert {
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 1rem 0;
+      font-size: 0.82rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .alert-yellow { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--yellow); }
+    .alert-green  { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: var(--green); }
+    .alert-blue   { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: var(--primary); }
+
+    /* ── HERO ── */
+    .hero-sub { font-size: 1rem; color: var(--text-dim); margin-top: 0.5rem; }
+    .hero-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media print {
+      body { background: white; color: black; }
+      header { background: #f8f9fa; border-color: #ddd; }
+      .nav { display: none; }
+      .layout { grid-template-columns: 1fr; }
+      section { border: 1px solid #ddd; }
+      .download-btn { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; }
+      .nav { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🛡️</div>
+    <div class="logo-text">Infra<span>Guard</span> AI — Documentation</div>
+  </div>
+  <a class="download-btn" href="#" onclick="window.print()">🖨️ Print / Save PDF</a>
+</header>
+
+<div class="layout">
+
+  <!-- ── SIDEBAR NAV ── -->
+  <nav class="nav">
+    <h4>Contents</h4>
+    <a href="#overview" class="active">📌 Overview</a>
+    <a href="#architecture">🏗️ Architecture</a>
+    <a href="#agents">🤖 5 Agents</a>
+    <a href="#tools">🔧 8 Tools</a>
+    <a href="#flow">⚡ How It Works</a>
+    <div class="nav-section">
+      <h4>Setup</h4>
+      <a href="#install">📦 Installation</a>
+      <a href="#config">⚙️ Configuration</a>
+      <a href="#run">🚀 Running</a>
+    </div>
+    <div class="nav-section">
+      <h4>Usage</h4>
+      <a href="#ui">🖥️ Web UI</a>
+      <a href="#api">🔌 API Endpoints</a>
+      <a href="#demos">🎬 Demo Scenarios</a>
+      <a href="#examples">💡 Examples</a>
+    </div>
+    <div class="nav-section">
+      <h4>Reference</h4>
+      <a href="#groq">☁️ Groq (Free AI)</a>
+      <a href="#ollama">🐳 Ollama (Local)</a>
+      <a href="#faq">❓ FAQ</a>
+    </div>
+  </nav>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <section id="overview">
+      <h1>🛡️ InfraGuard AI</h1>
+      <p class="hero-sub">A multi-agent DevOps intelligence platform powered by open-source AI. Analyzes logs, configs, deployments, and pipelines — instantly.</p>
+      <div class="hero-badges">
+        <span class="badge badge-blue">FastAPI Backend</span>
+        <span class="badge badge-green">Groq Free AI</span>
+        <span class="badge badge-purple">5 AI Agents</span>
+        <span class="badge badge-yellow">8 Analysis Tools</span>
+        <span class="badge badge-blue">Streaming UI</span>
+        <span class="badge badge-green">100% Free</span>
+      </div>
+
+      <h3>What is InfraGuard AI?</h3>
+      <p>InfraGuard AI is a backend application that uses AI agents to help DevOps engineers analyze infrastructure problems. Instead of spending hours reading logs or manually auditing configs, you paste your data and the AI gives you a structured report in seconds.</p>
+
+      <h3>What problems does it solve?</h3>
+      <ul>
+        <li>Your production service crashed at 3am — <strong>what went wrong?</strong></li>
+        <li>You wrote a Kubernetes config — <strong>is it secure?</strong></li>
+        <li>You have a big git diff — <strong>is it safe to deploy?</strong></li>
+        <li>Your CI/CD pipeline failed — <strong>what exactly broke?</strong></li>
+      </ul>
+    </section>
+
+    <!-- ARCHITECTURE -->
+    <section id="architecture">
+      <h2>🏗️ Architecture</h2>
+      <p>The application is built with Python + FastAPI. It connects to Groq (free cloud AI) or Ollama (local AI) and exposes a REST API with a streaming web UI.</p>
+
+      <pre><code>infraguard/
+├── main.py              ← FastAPI app, all API endpoints
+├── start.sh             ← One-click startup script
+├── requirements.txt     ← Python dependencies
+├── .env                 ← Your API keys (never committed to git)
+├── .env.example         ← Template for .env
+├── agents/
+│   ├── base.py          ← Agentic loop engine (tool calling + streaming)
+│   ├── specialists.py   ← 5 specialist agent definitions
+│   └── tools.py         ← 8 Python analysis tools
+└── static/
+    └── index.html       ← Dark theme web UI</code></pre>
+
+      <h3>Technology Stack</h3>
+      <table>
+        <tr><th>Component</th><th>Technology</th><th>Purpose</th></tr>
+        <tr><td>Backend</td><td>FastAPI (Python)</td><td>REST API + streaming server</td></tr>
+        <tr><td>AI Model</td><td>Llama 3.3 70B via Groq</td><td>Generates the analysis</td></tr>
+        <tr><td>AI Fallback</td><td>Qwen2.5 via Ollama</td><td>Local model if no internet</td></tr>
+        <tr><td>Streaming</td><td>Server-Sent Events (SSE)</td><td>Real-time token streaming</td></tr>
+        <tr><td>Frontend</td><td>Vanilla HTML/CSS/JS</td><td>Dark theme web interface</td></tr>
+        <tr><td>AI SDK</td><td>OpenAI Python SDK</td><td>Calls Groq + Ollama APIs</td></tr>
+      </table>
+    </section>
+
+    <!-- 5 AGENTS -->
+    <section id="agents">
+      <h2>🤖 5 AI Agents</h2>
+      <p>Each agent is a specialist with a specific role, system prompt, and set of tools. They all use the same AI model but behave differently based on their instructions.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Commander (Auto)</div>
+          <div class="card-desc">Master agent. Routes to all specialists automatically. Best when you're not sure which agent to use. Uses all 8 tools.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚨</div>
+          <div class="card-title">Incident Triage</div>
+          <div class="card-desc">Analyzes crash logs and alerts. Produces root cause analysis, severity (P1-P4), and step-by-step runbook.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <div class="card-title">Config Auditor</div>
+          <div class="card-desc">Scans Kubernetes, Terraform, and Docker configs for security vulnerabilities and misconfigurations.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">Deploy Risk</div>
+          <div class="card-desc">Analyzes git diffs before deployment. Gives a risk score 1-10, Go/No-Go decision, and rollback plan.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏥</div>
+          <div class="card-title">Pipeline Doctor</div>
+          <div class="card-desc">Diagnoses failing CI/CD pipelines. Finds the exact broken step and gives a fix with shell commands.</div>
+        </div>
+      </div>
+
+      <h3>Agent Details</h3>
+      <table>
+        <tr><th>Agent</th><th>Use When</th><th>Input</th><th>Output</th></tr>
+        <tr><td>⚡ Commander</td><td>Not sure which to use</td><td>Anything</td><td>Full intelligence report</td></tr>
+        <tr><td>🚨 Incident Triage</td><td>Production is down</td><td>Log files</td><td>Root cause + runbook</td></tr>
+        <tr><td>🔍 Config Auditor</td><td>Before deploying a config</td><td>YAML / HCL file</td><td>Security findings list</td></tr>
+        <tr><td>🚀 Deploy Risk</td><td>Before merging a PR</td><td>Git diff output</td><td>Risk score + rollback plan</td></tr>
+        <tr><td>🏥 Pipeline Doctor</td><td>CI/CD build failed</td><td>Pipeline log output</td><td>Diagnosis + exact fix</td></tr>
+      </table>
+    </section>
+
+    <!-- 8 TOOLS -->
+    <section id="tools">
+      <h2>🔧 8 Analysis Tools</h2>
+      <p>Tools are Python functions that the AI calls automatically. The AI decides which tools to use based on your input — you don't need to select them manually.</p>
+
+      <table>
+        <tr><th>Tool</th><th>What It Does</th><th>Used By</th></tr>
+        <tr><td><code>parse_log_patterns</code></td><td>Extracts errors, warnings, and repeated patterns from raw logs</td><td>Incident, Commander</td></tr>
+        <tr><td><code>extract_service_dependencies</code></td><td>Finds which services and HTTP endpoints appear in logs</td><td>Incident, Commander</td></tr>
+        <tr><td><code>scan_config_security</code></td><td>Scans K8s/Terraform/Docker configs for security issues</td><td>Config, Commander</td></tr>
+        <tr><td><code>check_resource_limits</code></td><td>Checks if Kubernetes containers have CPU/memory limits</td><td>Config, Commander</td></tr>
+        <tr><td><code>analyze_diff_scope</code></td><td>Counts lines changed, identifies risky file types in a diff</td><td>Deploy, Commander</td></tr>
+        <tr><td><code>detect_breaking_changes</code></td><td>Finds removed API endpoints, deleted env vars in a diff</td><td>Deploy, Commander</td></tr>
+        <tr><td><code>parse_pipeline_failure</code></td><td>Finds failing step, exit code, and error context in CI logs</td><td>Pipeline, Commander</td></tr>
+        <tr><td><code>get_similar_incidents_mock</code></td><td>Looks up past similar incidents and typical fixes</td><td>Pipeline, Commander</td></tr>
+      </table>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="flow">
+      <h2>⚡ How It Works (Step by Step)</h2>
+
+      <div class="flow">
+        <div class="flow-step">1️⃣<br>You paste<br>your data</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">2️⃣<br>Select<br>an agent</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">3️⃣<br>Agent calls<br>tools</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">4️⃣<br>Tools parse<br>your data</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">5️⃣<br>AI generates<br>report</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">6️⃣<br>Streams to<br>your browser</div>
+      </div>
+
+      <h3>Example: Incident Triage</h3>
+      <pre><code>You paste:  "ERROR: Connection pool exhausted. FATAL: OOM kill signal"
+
+Agent calls: parse_log_patterns()
+             → finds 2 errors, OOM pattern, 4 total lines
+
+Agent calls: extract_service_dependencies()
+             → finds postgres:5432 mentioned
+
+AI generates:
+  Root Cause: Memory leak caused connection pool exhaustion
+  Severity:   P1
+  Fix:        kubectl set resources deployment/app --limits=memory=2Gi
+  Runbook:    1. Check memory usage  2. Restart pod  3. Increase limits</code></pre>
+
+      <h3>Why Tool Calling Matters</h3>
+      <p>Without tools, the AI just reads text and guesses. With tools, the AI gets <strong>structured data</strong> — exact error counts, line numbers, security findings — making the analysis much more accurate and specific.</p>
+    </section>
+
+    <!-- INSTALLATION -->
+    <section id="install">
+      <h2>📦 Installation</h2>
+
+      <h3>Requirements</h3>
+      <ul>
+        <li>Python 3.10 or higher</li>
+        <li>pip (Python package manager)</li>
+        <li>Internet connection (for Groq API)</li>
+        <li>Groq free account (console.groq.com)</li>
+      </ul>
+
+      <h3>Clone and Install</h3>
+      <pre><code># Clone the repository
+git clone https://github.com/KashifSadiq11/inraGuard-AI.git
+cd inraGuard-AI
+
+# Install dependencies
+pip install -r requirements.txt</code></pre>
+    </section>
+
+    <!-- CONFIGURATION -->
+    <section id="config">
+      <h2>⚙️ Configuration</h2>
+
+      <h3>Create your .env file</h3>
+      <pre><code>cp .env.example .env
+nano .env</code></pre>
+
+      <h3>.env file contents</h3>
+      <pre><code># ── GROQ (Recommended — Free & Fast) ──
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
+
+# ── OLLAMA (Local fallback) ──
+OLLAMA_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:0.5b</code></pre>
+
+      <div class="alert alert-blue">
+        <span>ℹ️</span>
+        <span>If <strong>GROQ_API_KEY</strong> is set, the app uses Groq automatically. If not, it falls back to Ollama.</span>
+      </div>
+
+      <h3>Get Groq API Key (Free)</h3>
+      <ol>
+        <li>Go to <strong>console.groq.com</strong></li>
+        <li>Sign up with Google or GitHub (no credit card needed)</li>
+        <li>Click <strong>API Keys</strong> → <strong>Create API Key</strong></li>
+        <li>Copy the key and paste it in your <code>.env</code> file</li>
+      </ol>
+    </section>
+
+    <!-- RUNNING -->
+    <section id="run">
+      <h2>🚀 Running the Application</h2>
+
+      <h3>Start the server</h3>
+      <pre><code>./start.sh</code></pre>
+
+      <h3>Or manually</h3>
+      <pre><code>python3 -m uvicorn main:app --host 0.0.0.0 --port 8000</code></pre>
+
+      <h3>Open in browser</h3>
+      <pre><code>http://localhost:8000</code></pre>
+
+      <div class="alert alert-green">
+        <span>✅</span>
+        <span>You should see the InfraGuard AI dashboard with the dark theme UI.</span>
+      </div>
+    </section>
+
+    <!-- WEB UI -->
+    <section id="ui">
+      <h2>🖥️ Web UI Guide</h2>
+
+      <h3>Left Sidebar</h3>
+      <ul>
+        <li><strong>Select Agent</strong> — Choose which specialist to use (or leave on Auto)</li>
+        <li><strong>Optional Context</strong> — Add extra info like "production k8s manifest"</li>
+        <li><strong>Input Box</strong> — Paste your logs, config, diff, or pipeline output</li>
+        <li><strong>⚡ Analyze Button</strong> — Start the analysis</li>
+        <li><strong>Demo Scenarios</strong> — Pre-built examples to test the app</li>
+      </ul>
+
+      <h3>Right Panel</h3>
+      <ul>
+        <li><strong>Status Bar</strong> — Shows which agent is running and which tools are being called</li>
+        <li><strong>Output Area</strong> — Streams the AI analysis in real-time with markdown formatting</li>
+        <li><strong>Tool Chips</strong> — Animated chips showing which tools the AI called</li>
+        <li><strong>Copy Button</strong> — Copy the full analysis to clipboard</li>
+      </ul>
+
+      <h3>Top Header</h3>
+      <ul>
+        <li><strong>Model Badge</strong> — Shows which AI model is active (e.g. llama-3.3-70b-versatile)</li>
+        <li><strong>Status Badge</strong> — Online / Offline indicator</li>
+      </ul>
+    </section>
+
+    <!-- API ENDPOINTS -->
+    <section id="api">
+      <h2>🔌 API Endpoints</h2>
+
+      <table>
+        <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+        <tr><td><code>GET</code></td><td><code>/</code></td><td>Web UI (browser)</td></tr>
+        <tr><td><code>GET</code></td><td><code>/health</code></td><td>Health check + model info</td></tr>
+        <tr><td><code>GET</code></td><td><code>/agents</code></td><td>List all available agents</td></tr>
+        <tr><td><code>POST</code></td><td><code>/analyze</code></td><td>Stream analysis (SSE)</td></tr>
+        <tr><td><code>POST</code></td><td><code>/analyze/sync</code></td><td>Get full response at once</td></tr>
+        <tr><td><code>GET</code></td><td><code>/demo/{scenario}</code></td><td>Run a pre-built demo</td></tr>
+      </table>
+
+      <h3>POST /analyze — Request Body</h3>
+      <pre><code>{
+  "content": "your logs / config / diff / pipeline output",
+  "agent":   "auto | incident | config | deployment | pipeline",
+  "context": "optional extra context string"
+}</code></pre>
+
+      <h3>Example curl commands</h3>
+      <pre><code># Health check
+curl http://localhost:8000/health
+
+# List agents
+curl http://localhost:8000/agents
+
+# Run demo scenario
+curl -N http://localhost:8000/demo/oom_incident
+
+# Analyze your own data (streaming)
+curl -N -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"incident","content":"ERROR: OOM killed"}'
+
+# Analyze and get full response
+curl -X POST http://localhost:8000/analyze/sync \
+  -H "Content-Type: application/json" \
+  -d '{"agent":"config","content":"your k8s yaml here"}'</code></pre>
+    </section>
+
+    <!-- DEMOS -->
+    <section id="demos">
+      <h2>🎬 Demo Scenarios</h2>
+      <p>Click any demo in the sidebar to instantly test the app with real-world DevOps data.</p>
+
+      <table>
+        <tr><th>Demo</th><th>Scenario</th><th>Agent Used</th><th>Severity</th></tr>
+        <tr>
+          <td>💥 OOM Kill</td>
+          <td>Payment service crashes due to memory exhaustion at 3am</td>
+          <td>Incident Triage</td>
+          <td><span class="badge badge-red">P1</span></td>
+        </tr>
+        <tr>
+          <td>🔓 K8s Audit</td>
+          <td>Kubernetes deployment with privileged containers, hardcoded secrets</td>
+          <td>Config Auditor</td>
+          <td><span class="badge badge-red">Critical</span></td>
+        </tr>
+        <tr>
+          <td>⚠️ Risky Deploy</td>
+          <td>PR with DB migrations, removed API endpoints, Terraform changes</td>
+          <td>Deploy Risk</td>
+          <td><span class="badge badge-yellow">High</span></td>
+        </tr>
+        <tr>
+          <td>🔴 Pipeline Fail</td>
+          <td>GitHub Actions failing with DB connection error and test failures</td>
+          <td>Pipeline Doctor</td>
+          <td><span class="badge badge-purple">Failed</span></td>
+        </tr>
+      </table>
+
+      <h3>Run demos via terminal</h3>
+      <pre><code>curl -N http://localhost:8000/demo/oom_incident
+curl -N http://localhost:8000/demo/k8s_audit
+curl -N http://localhost:8000/demo/risky_deploy
+curl -N http://localhost:8000/demo/pipeline_fail</code></pre>
+    </section>
+
+    <!-- EXAMPLES -->
+    <section id="examples">
+      <h2>💡 Real-World Examples</h2>
+
+      <h3>Example 1 — Analyze Kubernetes pod logs</h3>
+      <pre><code># Copy logs from your cluster
+kubectl logs -n production my-pod --tail=100 > /tmp/pod.log
+
+# Paste content into the app with agent: incident
+# Or via curl:
+curl -X POST http://localhost:8000/analyze/sync \
+  -H "Content-Type: application/json" \
+  -d "{\"agent\":\"incident\",\"content\":\"$(cat /tmp/pod.log)\"}"</code></pre>
+
+      <h3>Example 2 — Audit a Kubernetes manifest</h3>
+      <pre><code># Paste your deployment.yaml content into the app
+# Select: Config Auditor
+# Context: "kubernetes production deployment"</code></pre>
+
+      <h3>Example 3 — Check a PR before merging</h3>
+      <pre><code># Generate the diff
+git diff main..your-feature-branch > /tmp/pr.diff
+
+# Paste into the app, select: Deploy Risk
+# You'll get a risk score and go/no-go decision</code></pre>
+
+      <h3>Example 4 — Diagnose a failed build</h3>
+      <pre><code># Copy your GitHub Actions / Jenkins log output
+# Paste into the app, select: Pipeline Doctor
+# You'll get the exact failing line and fix</code></pre>
+    </section>
+
+    <!-- GROQ -->
+    <section id="groq">
+      <h2>☁️ Groq — Free AI API</h2>
+      <p>Groq is a free AI inference service that runs open-source models extremely fast on custom chips.</p>
+
+      <table>
+        <tr><th>Model</th><th>Requests/min</th><th>Tokens/day</th><th>Speed</th></tr>
+        <tr><td>llama-3.3-70b-versatile</td><td>30</td><td>100,000</td><td>⚡⚡⚡</td></tr>
+        <tr><td>llama-3.1-8b-instant</td><td>30</td><td>500,000</td><td>⚡⚡⚡⚡</td></tr>
+        <tr><td>mixtral-8x7b</td><td>30</td><td>500,000</td><td>⚡⚡⚡</td></tr>
+      </table>
+
+      <div class="alert alert-green">
+        <span>✅</span>
+        <span>100,000 tokens/day = approximately <strong>100 full analyses per day</strong> for free. Resets every 24 hours.</span>
+      </div>
+
+      <h3>Check your usage</h3>
+      <pre><code>https://console.groq.com/usage</code></pre>
+
+      <h3>Switch to faster model</h3>
+      <pre><code># In your .env file, change:
+GROQ_MODEL=llama-3.1-8b-instant   # 5x more tokens/day</code></pre>
+    </section>
+
+    <!-- OLLAMA -->
+    <section id="ollama">
+      <h2>🐳 Ollama — Local AI Fallback</h2>
+      <p>If you don't set a Groq API key, the app automatically uses Ollama running locally in Docker.</p>
+
+      <h3>Your Ollama setup</h3>
+      <pre><code>Container: ollama/ollama
+Port:      11434
+Models:    qwen2.5:1.5b (better)
+           qwen2.5:0.5b (faster)</code></pre>
+
+      <div class="alert alert-yellow">
+        <span>⚠️</span>
+        <span>Ollama on CPU only is slow (~5 tokens/sec). Groq is recommended for daily use (~800 tokens/sec).</span>
+      </div>
+
+      <h3>Pull a better model for Ollama</h3>
+      <pre><code>docker exec ollama ollama pull llama3.2
+# Then update .env: OLLAMA_MODEL=llama3.2</code></pre>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2>❓ FAQ</h2>
+
+      <h3>Q: Is my data sent to the cloud?</h3>
+      <p>If using Groq — yes, your input is sent to Groq's servers for AI processing. If using Ollama — everything stays 100% local on your machine.</p>
+
+      <h3>Q: Can I use this with my real production logs?</h3>
+      <p>Yes. Paste any log output directly. Be careful not to include passwords or secrets in the logs you paste if using Groq (cloud).</p>
+
+      <h3>Q: How do I add more agents?</h3>
+      <p>Open <code>agents/specialists.py</code> and add a new class that extends <code>BaseAgent</code>. Define a <code>system_prompt</code> and <code>allowed_tools</code> list. Then register it in the <code>get_agent()</code> function.</p>
+
+      <h3>Q: How do I add more tools?</h3>
+      <p>Open <code>agents/tools.py</code>, add a new Python function, register it in <code>TOOL_REGISTRY</code>, and add its definition to <code>ALL_TOOL_DEFS</code> in <code>agents/base.py</code>.</p>
+
+      <h3>Q: The analysis is wrong or incomplete?</h3>
+      <p>The 0.5b and 1.5b Qwen models are very small. Switch to Groq with <code>llama-3.3-70b-versatile</code> for much better quality analysis.</p>
+
+      <h3>Q: How do I stop the server?</h3>
+      <pre><code>fuser -k 8000/tcp</code></pre>
+
+      <h3>Q: GitHub URL</h3>
+      <pre><code>https://github.com/KashifSadiq11/inraGuard-AI</code></pre>
+    </section>
+
+  </div>
+</div>
+
+</body>
+</html>
