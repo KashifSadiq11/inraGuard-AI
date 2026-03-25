@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfraGuard AI — Deployment Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.7; }
+  .hero { background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); border-bottom: 1px solid #30363d; padding: 48px 32px; text-align: center; }
+  .hero h1 { font-size: 2.2rem; font-weight: 700; color: #58a6ff; margin-bottom: 8px; }
+  .hero p { color: #8b949e; font-size: 1.1rem; }
+  .badge { display: inline-block; background: #238636; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+  h2 { font-size: 1.5rem; color: #58a6ff; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #30363d; }
+  h3 { font-size: 1.1rem; color: #f0f6fc; margin: 24px 0 10px; }
+  p { color: #8b949e; margin-bottom: 12px; }
+  pre { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; overflow-x: auto; margin: 12px 0 20px; position: relative; }
+  code { font-family: 'Courier New', monospace; font-size: 0.88rem; color: #e6edf3; }
+  .step { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 24px; margin-bottom: 20px; position: relative; }
+  .step-num { position: absolute; top: -14px; left: 20px; background: #58a6ff; color: #0d1117; font-weight: 700; font-size: 0.85rem; padding: 2px 12px; border-radius: 20px; }
+  .step h3 { margin-top: 8px; color: #f0f6fc; }
+  .note { background: #1c2128; border-left: 4px solid #d29922; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; color: #e3b341; font-size: 0.9rem; }
+  .success { background: #1c2128; border-left: 4px solid #238636; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; color: #3fb950; font-size: 0.9rem; }
+  .warning { background: #1c2128; border-left: 4px solid #da3633; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; color: #ff7b72; font-size: 0.9rem; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; }
+  th { background: #161b22; color: #58a6ff; padding: 12px 16px; text-align: left; border: 1px solid #30363d; font-size: 0.9rem; }
+  td { padding: 10px 16px; border: 1px solid #30363d; color: #8b949e; font-size: 0.9rem; }
+  tr:hover td { background: #1c2128; }
+  .url-box { background: #161b22; border: 2px solid #238636; border-radius: 8px; padding: 16px 20px; text-align: center; margin: 20px 0; }
+  .url-box a { color: #3fb950; font-size: 1.1rem; font-weight: 600; text-decoration: none; }
+  .url-box a:hover { text-decoration: underline; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: #21262d; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; }
+  .copy-btn:hover { background: #30363d; color: #e6edf3; }
+  .print-btn { position: fixed; bottom: 24px; right: 24px; background: #238636; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.4); z-index: 100; }
+  .print-btn:hover { background: #2ea043; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; }
+  .card h4 { color: #58a6ff; margin-bottom: 8px; }
+  .card p { font-size: 0.85rem; margin: 0; }
+  @media(max-width:600px){ .grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.5rem; } }
+  @media print { .print-btn { display: none; } body { background: #fff; color: #000; } pre { background: #f5f5f5; border: 1px solid #ddd; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>InfraGuard AI — Deployment Guide</h1>
+  <p>Step-by-step guide to deploy on HuggingFace Spaces using Python CLI</p>
+  <span class="badge">Free Hosting · No Card Required · Always On</span>
+</div>
+
+<div class="container">
+
+  <!-- Overview -->
+  <h2>Overview</h2>
+  <p>This guide covers how to deploy InfraGuard AI to <strong>HuggingFace Spaces</strong> for free using the <code>huggingface_hub</code> Python library. No credit card required. App stays always on.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>Platform</h4>
+      <p>HuggingFace Spaces (Docker SDK)</p>
+    </div>
+    <div class="card">
+      <h4>Cost</h4>
+      <p>100% Free — no card needed</p>
+    </div>
+    <div class="card">
+      <h4>Sleep Policy</h4>
+      <p>Never sleeps — always running</p>
+    </div>
+    <div class="card">
+      <h4>Resources</h4>
+      <p>2 vCPU · 16GB RAM · 50GB Storage</p>
+    </div>
+  </div>
+
+  <!-- Prerequisites -->
+  <h2>Prerequisites</h2>
+  <table>
+    <tr><th>Requirement</th><th>Details</th></tr>
+    <tr><td>HuggingFace Account</td><td>Free signup at huggingface.co</td></tr>
+    <tr><td>HuggingFace Token</td><td>Write access token from Settings → Access Tokens</td></tr>
+    <tr><td>Groq API Key</td><td>Free key from console.groq.com</td></tr>
+    <tr><td>Python 3.8+</td><td>Already installed on your machine</td></tr>
+    <tr><td>huggingface_hub</td><td>Installed in Step 1 below</td></tr>
+  </table>
+
+  <!-- Step by Step -->
+  <h2>Deployment Steps</h2>
+
+  <div class="step">
+    <div class="step-num">Step 1</div>
+    <h3>Install HuggingFace Hub Library</h3>
+    <p>Install the official HuggingFace Python library that lets you interact with Spaces via CLI.</p>
+    <pre><code>pip install huggingface_hub --break-system-packages</code></pre>
+    <div class="note">If you are using a virtual environment, remove <code>--break-system-packages</code></div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Step 2</div>
+    <h3>Verify Your HuggingFace Username</h3>
+    <p>Use your token to confirm your HuggingFace username before proceeding.</p>
+    <pre><code>python3 -c "
+from huggingface_hub import HfApi
+api = HfApi(token='YOUR_HF_TOKEN')
+user = api.whoami()
+print(user['name'])
+"</code></pre>
+    <div class="success">Expected output: your HuggingFace username (e.g. Kashif77)</div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Step 3</div>
+    <h3>Create the HuggingFace Space</h3>
+    <p>Create a new Docker-based Space in your HuggingFace account. Replace <code>YOUR_USERNAME</code> and <code>YOUR_HF_TOKEN</code>.</p>
+    <pre><code>python3 -c "
+from huggingface_hub import HfApi
+api = HfApi(token='YOUR_HF_TOKEN')
+api.create_repo(
+    repo_id='YOUR_USERNAME/infraguard-ai',
+    repo_type='space',
+    space_sdk='docker',
+    private=False,
+    exist_ok=True
+)
+print('Space created successfully')
+"</code></pre>
+    <div class="success">Expected output: Space created successfully</div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Step 4</div>
+    <h3>Upload All Application Files</h3>
+    <p>Upload every required file from your local project directory to the Space. Replace <code>YOUR_HF_TOKEN</code>, <code>YOUR_USERNAME</code>, and <code>/path/to/infraguard</code> with your actual values.</p>
+    <pre><code>python3 -c "
+from huggingface_hub import HfApi
+import os
+
+api = HfApi(token='YOUR_HF_TOKEN')
+base = '/path/to/infraguard'
+
+files = [
+    'main.py',
+    'requirements.txt',
+    'Dockerfile',
+    'agents/__init__.py',
+    'agents/base.py',
+    'agents/specialists.py',
+    'agents/tools.py',
+    'static/index.html',
+    'static/docs.html',
+]
+
+for f in files:
+    full_path = os.path.join(base, f)
+    if os.path.exists(full_path):
+        api.upload_file(
+            path_or_fileobj=full_path,
+            path_in_repo=f,
+            repo_id='YOUR_USERNAME/infraguard-ai',
+            repo_type='space',
+            token='YOUR_HF_TOKEN'
+        )
+        print(f'Uploaded: {f}')
+    else:
+        print(f'SKIPPED (not found): {f}')
+"</code></pre>
+    <div class="success">Expected output: Uploaded: main.py, Uploaded: requirements.txt ... (all 9 files)</div>
+    <div class="note">If a file shows "No files modified" — it was already uploaded and unchanged. That is fine.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Step 5</div>
+    <h3>Add Environment Secrets</h3>
+    <p>Add your Groq API key and model name as secrets. These are stored securely and injected as environment variables at runtime.</p>
+    <pre><code>python3 -c "
+from huggingface_hub import HfApi
+api = HfApi(token='YOUR_HF_TOKEN')
+
+api.add_space_secret(
+    repo_id='YOUR_USERNAME/infraguard-ai',
+    key='GROQ_API_KEY',
+    value='YOUR_GROQ_API_KEY'
+)
+api.add_space_secret(
+    repo_id='YOUR_USERNAME/infraguard-ai',
+    key='GROQ_MODEL',
+    value='llama-3.3-70b-versatile'
+)
+print('Secrets added successfully')
+"</code></pre>
+    <div class="success">Expected output: Secrets added successfully</div>
+    <div class="warning">Never hardcode API keys in your code or Dockerfile. Always use secrets.</div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Step 6</div>
+    <h3>Check Build Status</h3>
+    <p>Monitor the Space build status. It takes 2–3 minutes to build the Docker image.</p>
+    <pre><code>python3 -c "
+from huggingface_hub import HfApi
+api = HfApi(token='YOUR_HF_TOKEN')
+space_info = api.get_space_runtime(repo_id='YOUR_USERNAME/infraguard-ai')
+print('Stage:', space_info.stage)
+"</code></pre>
+    <table>
+      <tr><th>Stage Value</th><th>Meaning</th></tr>
+      <tr><td>BUILDING</td><td>Docker image is being built — wait 2-3 minutes</td></tr>
+      <tr><td>RUNNING</td><td>App is live and ready</td></tr>
+      <tr><td>STOPPED</td><td>App stopped — check logs on HuggingFace UI</td></tr>
+      <tr><td>ERROR</td><td>Build failed — check Dockerfile and requirements.txt</td></tr>
+    </table>
+  </div>
+
+  <!-- Live URL -->
+  <h2>Your App URL</h2>
+  <p>Once Stage shows <strong>RUNNING</strong>, your app is live at:</p>
+  <div class="url-box">
+    <a href="https://YOUR_USERNAME-infraguard-ai.hf.space" target="_blank">
+      https://YOUR_USERNAME-infraguard-ai.hf.space
+    </a>
+  </div>
+  <p>Replace <code>YOUR_USERNAME</code> with your actual HuggingFace username (e.g. <code>kashif77-infraguard-ai.hf.space</code>).</p>
+
+  <!-- Dockerfile Note -->
+  <h2>Important: Dockerfile Port</h2>
+  <p>HuggingFace Spaces requires port <strong>7860</strong>. Make sure your Dockerfile uses this port:</p>
+  <pre><code>EXPOSE 7860
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]</code></pre>
+  <div class="warning">Using port 8000 will cause the app to not respond. Always use 7860 for HuggingFace Spaces.</div>
+
+  <!-- Update Deployment -->
+  <h2>How to Update After Code Changes</h2>
+  <p>When you make changes to your code, re-upload the changed files using the same upload command from Step 4. HuggingFace will automatically rebuild.</p>
+  <pre><code># Re-upload a single changed file
+python3 -c "
+from huggingface_hub import HfApi
+api = HfApi(token='YOUR_HF_TOKEN')
+api.upload_file(
+    path_or_fileobj='/path/to/infraguard/main.py',
+    path_in_repo='main.py',
+    repo_id='YOUR_USERNAME/infraguard-ai',
+    repo_type='space',
+    token='YOUR_HF_TOKEN'
+)
+print('Updated successfully')
+"</code></pre>
+
+  <!-- Free Tier Info -->
+  <h2>HuggingFace Free Tier Limits</h2>
+  <table>
+    <tr><th>Resource</th><th>Free Limit</th><th>Your Usage</th></tr>
+    <tr><td>CPU</td><td>2 vCPU</td><td>Very low — FastAPI is lightweight</td></tr>
+    <tr><td>RAM</td><td>16 GB</td><td>~200MB used</td></tr>
+    <tr><td>Storage</td><td>50 GB</td><td>~5MB used</td></tr>
+    <tr><td>Bandwidth</td><td>Unlimited</td><td>No limit</td></tr>
+    <tr><td>Sleep</td><td>Never sleeps</td><td>Always on</td></tr>
+    <tr><td>Spaces</td><td>Unlimited</td><td>Only 1 used</td></tr>
+  </table>
+  <div class="success">Your app is extremely lightweight. You will never hit the free tier limits.</div>
+
+  <!-- Troubleshooting -->
+  <h2>Troubleshooting</h2>
+  <table>
+    <tr><th>Problem</th><th>Solution</th></tr>
+    <tr><td>Stage stays BUILDING for 10+ min</td><td>Check logs on HuggingFace Space UI → Logs tab</td></tr>
+    <tr><td>App loads but AI gives no response</td><td>Check GROQ_API_KEY secret is set correctly</td></tr>
+    <tr><td>Port error / app not reachable</td><td>Ensure Dockerfile uses port 7860 not 8000</td></tr>
+    <tr><td>File not found error</td><td>Check all files uploaded including agents/__init__.py</td></tr>
+    <tr><td>Token invalid error</td><td>Regenerate token with Write permission on huggingface.co</td></tr>
+    <tr><td>Module not found error</td><td>Check requirements.txt has all dependencies</td></tr>
+  </table>
+
+  <p style="margin-top:40px; text-align:center; color:#30363d; font-size:0.85rem;">
+    InfraGuard AI — Deployment Guide · Generated 2025
+  </p>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+
+</body>
+</html>
